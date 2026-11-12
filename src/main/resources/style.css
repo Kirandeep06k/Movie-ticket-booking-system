@@ -1,0 +1,106 @@
+/* Theatrely - clean look: off-white background, white cards, black buttons, grey text, yellow star only */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #FAF7F5;
+    -fx-text-fill: #111;
+}
+.label { -fx-text-fill: #111; }
+.app-root { -fx-background-color: #FAF7F5; }
+
+/* ---------- header */
+.header { -fx-background-color: #FAF7F5; -fx-padding: 16 32 12 32; }
+.logo-text { -fx-font-size: 24px; -fx-font-weight: bold; }
+.logo { -fx-font-family: "Bebas Neue", Georgia, serif; -fx-font-size: 36px; }
+.search-field { -fx-background-color: #EFEBE8; -fx-background-radius: 28; -fx-border-radius: 28; -fx-border-width: 0; -fx-padding: 14 20 14 50; -fx-font-size: 14px; -fx-prompt-text-fill: #8a8a8a; }
+.search-field:focused { -fx-background-color: white; -fx-border-color: #111; -fx-border-width: 1.5; -fx-padding: 13 20 13 49; }
+.loc-btn { -fx-background-color: transparent; -fx-background-radius: 20; -fx-cursor: hand; -fx-padding: 6 10 6 10; }
+.loc-btn:hover { -fx-background-color: #EFEBE8; }
+.loc-btn .label { -fx-font-size: 15px; -fx-font-weight: bold; }
+.profile-btn { -fx-background-color: white; -fx-background-radius: 30; -fx-border-color: #d6d3d1; -fx-border-radius: 30; -fx-padding: 9 4 9 10; -fx-cursor: hand; }
+.profile-btn:hover { -fx-background-color: #F1EEEC; }
+.profile-btn > .arrow-button { -fx-padding: 0 4 0 0; }
+.profile-btn > .arrow-button > .arrow { -fx-padding: 0; -fx-shape: ""; }
+.filter-btn { -fx-background-color: white; -fx-background-radius: 14; -fx-border-color: #e7e2de; -fx-border-radius: 14; -fx-padding: 9 4 9 10; -fx-cursor: hand; }
+.filter-btn:hover { -fx-background-color: #F1EEEC; }
+.filter-btn > .arrow-button { -fx-padding: 0 4 0 0; }
+.filter-btn > .arrow-button > .arrow { -fx-padding: 0; -fx-shape: ""; }
+.menu-item:focused { -fx-background-color: #111; }
+.menu-item:focused .label { -fx-text-fill: white; }
+.status { -fx-font-size: 11px; -fx-text-fill: #6B7280; -fx-padding: 6 32 8 32; }
+
+/* ---------- typography */
+.mono { -fx-font-size: 12px; -fx-text-fill: #6B7280; }
+.page-title { -fx-font-family: "Bebas Neue", Georgia, serif; -fx-font-size: 46px; }
+.login-headline { -fx-font-family: "Bebas Neue", Georgia, serif; -fx-font-size: 92px; -fx-line-spacing: -14; }
+.section-title, .heading { -fx-font-family: "Bebas Neue", Georgia, serif; -fx-font-size: 34px; }
+.detail-title { -fx-font-family: "Bebas Neue", Georgia, serif; -fx-font-size: 68px; }
+.small-title { -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #6B7280; }
+.card-title { -fx-font-size: 15px; -fx-font-weight: bold; }
+.body-text { -fx-font-size: 15px; -fx-line-spacing: 3; }
+.poster-title { -fx-font-family: "Bebas Neue", Georgia, serif; }
+.avatar-text { -fx-font-family: "Bebas Neue", Georgia, serif; -fx-font-size: 26px; }
+
+/* ---------- genre pills (top of the movie grid) */
+.pill-btn { -fx-background-color: white; -fx-background-radius: 24; -fx-border-color: #e7e2de; -fx-border-radius: 24; -fx-padding: 9 26 9 26; -fx-font-size: 14px; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 2); }
+.pill-btn:hover { -fx-background-color: #F1EEEC; }
+.pill-selected { -fx-background-color: #111; -fx-border-color: #111; }
+.pill-selected .text { -fx-fill: white; -fx-font-weight: bold; }
+.pill-selected:hover { -fx-background-color: #111; }
+
+/* ---------- movie cards */
+.movie-card { -fx-background-color: white; -fx-background-radius: 16; -fx-border-color: #efeae6; -fx-border-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 14, 0, 0, 4); }
+.pill { -fx-background-color: #F1EEEC; -fx-background-radius: 12; -fx-padding: 3 8 3 8; -fx-font-size: 11px; -fx-text-fill: #6B7280; }
+.book-btn { -fx-background-color: #111; -fx-background-radius: 22; -fx-padding: 10 14 10 14; -fx-cursor: hand; }
+.book-btn .text { -fx-fill: white; -fx-font-weight: bold; }
+.book-btn:hover { -fx-background-color: #3a3a3a; }
+
+/* ---------- buttons */
+.outline-btn { -fx-background-color: white; -fx-background-radius: 22; -fx-border-color: #d6d3d1; -fx-border-radius: 22; -fx-border-width: 1.5; -fx-font-size: 13px; -fx-padding: 9 20 9 20; -fx-cursor: hand; }
+.outline-btn:hover { -fx-background-color: #111; -fx-border-color: #111; }
+.outline-btn:hover .text { -fx-fill: white; }
+.solid-btn, .primary-btn { -fx-background-color: #111; -fx-background-radius: 22; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 10 22 10 22; -fx-cursor: hand; }
+.solid-btn .text, .primary-btn .text { -fx-fill: white; }
+.solid-btn:hover, .primary-btn:hover { -fx-background-color: #3a3a3a; }
+.solid-btn:disabled, .primary-btn:disabled { -fx-background-color: #c9c5c1; -fx-opacity: 1; }
+.danger-btn { -fx-background-color: white; -fx-background-radius: 22; -fx-border-color: #dc2626; -fx-border-radius: 22; -fx-border-width: 1.5; -fx-padding: 9 20 9 20; -fx-cursor: hand; }
+.danger-btn .text { -fx-fill: #dc2626; }
+.danger-btn:hover { -fx-background-color: #dc2626; }
+.danger-btn:hover .text { -fx-fill: white; }
+.login-tab { -fx-background-color: white; -fx-background-radius: 22; -fx-border-color: #d6d3d1; -fx-border-radius: 22; -fx-border-width: 1.5; -fx-font-weight: bold; -fx-padding: 9 24 9 24; -fx-cursor: hand; }
+.login-tab-active { -fx-background-color: #111; -fx-border-color: #111; }
+.login-tab-active .text { -fx-fill: white; }
+
+/* ---------- inputs */
+.text-field, .password-field { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #d6d3d1; -fx-border-radius: 12; -fx-border-width: 1; -fx-padding: 11 14 11 14; -fx-prompt-text-fill: #9ca3af; }
+.text-field:focused, .password-field:focused { -fx-border-color: #111; -fx-border-width: 1.5; }
+.text-area { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #d6d3d1; -fx-border-radius: 12; }
+.text-area .content { -fx-background-color: white; -fx-background-radius: 12; }
+.combo-box { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #d6d3d1; -fx-border-radius: 12; }
+.combo-box-base .arrow-button { -fx-background-color: transparent; }
+.date-picker .arrow-button { -fx-background-color: transparent; }
+.check-box .box { -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #111; -fx-background-color: white; }
+.check-box:selected .box { -fx-background-color: #111; }
+.check-box:selected .mark { -fx-background-color: white; }
+
+/* ---------- seats */
+.screen { -fx-background-color: #E7E5E4; -fx-background-radius: 8; -fx-padding: 8; -fx-font-weight: bold; }
+.seat, .seat-free { -fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #d6d3d1; -fx-border-radius: 8; -fx-border-width: 1; -fx-pref-width: 46; -fx-pref-height: 34; -fx-font-size: 11px; -fx-cursor: hand; }
+.seat:hover, .seat-free:hover { -fx-background-color: #F1EEEC; }
+.seat:selected, .seat-free:selected { -fx-background-color: #111; -fx-border-color: #111; }
+.seat:selected .text, .seat-free:selected .text { -fx-fill: white; }
+.seat:disabled, .seat-free:disabled { -fx-background-color: #E7E5E4; -fx-border-color: #E7E5E4; -fx-opacity: 1; }
+
+/* ---------- tables, lists, scroll */
+.table-view { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e7e2de; -fx-border-radius: 12; }
+.table-view .column-header-background { -fx-background-color: #F1EEEC; -fx-background-radius: 12 12 0 0; }
+.table-view .column-header, .table-view .filler { -fx-background-color: #F1EEEC; -fx-border-color: transparent; }
+.table-view .column-header .label { -fx-font-weight: bold; }
+.table-row-cell:selected { -fx-background-color: #E7E5E4; }
+.table-row-cell:selected .text { -fx-fill: #111; }
+.table-row-cell:selected .table-cell { -fx-text-fill: #111; }
+.list-view { -fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e7e2de; -fx-border-radius: 12; }
+.list-cell:filled:selected { -fx-background-color: #E7E5E4; -fx-text-fill: #111; }
+.scroll-pane { -fx-background-color: #FAF7F5; -fx-background-insets: 0; -fx-padding: 0; }
+.scroll-pane > .viewport { -fx-background-color: #FAF7F5; }
+.page-scroll { -fx-background-color: #FAF7F5; }
