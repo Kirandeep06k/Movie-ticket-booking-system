@@ -1,5 +1,27 @@
+# Maven
 target/
+
+# IDE
+.idea/
+.vscode/
+
+# Runtime data
 data/
 logs/
-.idea/
+
+# Compiled Java files
 *.class
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local database files
+*.db
+*.db-journal
+
+# Locally downloaded movie posters
+posters/*.jpg
+posters/*.jpeg
+posters/*.png
