@@ -50,20 +50,27 @@ public class UserService {
         }
     }
 
-    /** Login with email + password. The admin account comes from app.properties. */
+
+    /** Login with email + password. Admin password comes from an environment variable. */
     public Person login(String email, String password) throws BookingException {
         String e = Validator.email(email);
+
         if (password == null || password.isEmpty()) {
             throw new InvalidInputException("Please enter your password.");
         }
+
         if (isAdminEmail(e)) {
-            if (AppConfig.get("admin.password", "admin123").equals(password)) {
+            String adminPassword = AppConfig.get("admin.password", "");
+
+            if (!adminPassword.isEmpty() && adminPassword.equals(password)) {
                 AppLogger.get().info("Admin logged in");
                 return new Admin(0, "Admin", e);
             }
+
             AppLogger.get().warning("Failed admin login");
             throw new InvalidInputException("Wrong email or password.");
         }
+
         try {
             Optional<Customer> found = dao.findByEmail(e);
             if (found.isPresent()) {
@@ -79,6 +86,7 @@ public class UserService {
             throw new BookingException("Login failed: " + ex.getMessage(), ex);
         }
     }
+
 
     /** Saved {state, city} of a customer, or {null, null}. */
     public String[] loadLocation(Person p) {

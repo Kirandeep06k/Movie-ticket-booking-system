@@ -1,69 +1,268 @@
-# Theatrely - Movie Booking System (Core Java + JavaFX + JDBC)
+# Theatrely – Movie Booking System
 
-Course: UCS553 Enterprise Web Application. Everything (front end + back end) is in Java.
+A desktop-based movie ticket booking application developed using **Core Java, JavaFX, JDBC, and SQLite**.
 
-## How to run
-Needs JDK 17+ and Maven (IntelliJ has both built in).
+## Technology Stack
 
-IntelliJ: File > Open > select this folder (pom.xml) > wait for Maven import > run `com.mbs.Launcher`.
-Terminal: `mvn javafx:run`   (or `mvn clean package` to build)
+| Component | Technology |
+|---|---|
+| Programming Language | Java 17+ |
+| Frontend | JavaFX |
+| Backend | Core Java |
+| Database | SQLite |
+| Database Connectivity | JDBC |
+| Build Tool | Maven |
+| Logging | Java Util Logging |
 
-Customers: open the Register tab (name, email, password), then use Login (email + password). Passwords are stored as salted SHA-256 hashes, never as plain text.
-Admin: login with email `admin@theatrely.com` and password `admin123` (both set in app.properties).
-Database (SQLite) is created automatically in `data/movies.db` with 20 sample movies (all-time favourites and recent releases) and their shows. No need to add movies yourself; if show dates pass, fresh shows are added on next start. Logs go to `logs/app.log`.
+## Getting Started
 
-## Syllabus coverage (where to show it in the viva)
+### Prerequisites
 
-| Unit | Topic | Where |
-|---|---|---|
-| 1 | Packages / project structure | `com.mbs.{model,dao,service,util,ui,exception}` |
-| 1 | Classes, objects | `model/*` (Movie, Show, Booking...) |
-| 1 | Interfaces | `model/Payable` (impl. by Show), `dao/GenericDao<T>` (impl. by 4 DAOs) |
-| 1 | Abstract classes, inheritance | `model/Person` (abstract) -> `Customer`, `Admin` |
-| 1 | Static vs instance, access modifiers | `Person.instanceCount` (static), private/protected fields, `Session` static services |
-| 1 | Coding conventions | camelCase methods, PascalCase classes, Javadoc comments, layered packages |
-| 1 | Build tool | `pom.xml` (Maven) |
-| 1 | JVM / JRE / JDK / CLASSPATH | see notes below |
-| 2 | Custom exceptions + hierarchy | `exception/BookingException` -> `SeatUnavailableException`, `InvalidInputException` |
-| 2 | try / catch / throws / finally | every service + DAO (`BookingService.bookSeats`) |
-| 2 | ArrayList / HashMap | ArrayList: `BookingService.allSeats()`, all DAO result lists. HashMap: `CatalogService.genreCounts` (shown in the status bar) |
-| 2 | LinkedList / HashSet | `BookingService.RECENT` (LinkedList queue), `findBookedSeats` and `CatalogService.genres` (HashSet) |
-| 2 | Iterator | `CatalogService.upcomingShows`, `BookingService.availableSeats` (`it.remove()`) |
-| 2 | Comparator / Comparable | `CatalogService.sortMovies` (Comparator), `Movie.compareTo` (Comparable) |
-| 2 | Generics | `GenericDao<T>`, `CatalogService.filter(Collection<T>, Predicate<T>)` |
-| 2 | Objects, Optional, Math | `Objects.requireNonNull/equals/hash`; `Optional` in all `findById`; `Math.round` in `calculateTotal` |
-| 2 | LocalDate / LocalTime / LocalDateTime | `Show`, `Booking`, `CatalogService.addShow` |
-| 3 | Character streams | `FileUtil.writeReceipt`, `exportCsv`, `readLastLines` (BufferedWriter/FileWriter/BufferedReader) |
-| 3 | Byte streams | `FileUtil.copyPoster` (FileInputStream/FileOutputStream) - Admin > Choose poster |
-| 3 | Serialization / deserialization | `FileUtil.backup` / `restore` - My Bookings > Backup / View backup file |
-| 3 | Logging | `util/AppLogger` (java.util.logging) -> `logs/app.log` |
-| 3 | Properties file | `resources/app.properties` read by `util/AppConfig` |
-| 4 | JDBC API (Connection, DriverManager) | `util/DatabaseManager` |
-| 4 | MySQL/SQLite | SQLite (`sqlite-jdbc` in pom) |
-| 4 | CRUD | all DAOs: insert / findById / findAll / update / delete |
-| 4 | PreparedStatement / ResultSet | every DAO method |
-| 4 | Transactions | `BookingService.bookSeats` / `cancelBooking` (setAutoCommit(false), commit, rollback) |
-| 4 | DAO pattern | `dao/*` + `GenericDao` |
-| 5 | Application subclass, init/start/stop | `Main` |
-| 5 | Stage, Scene, scene graph | `Main`, `Session`, `SeatDialog` (second Stage) |
-| 5 | Extra layouts | FlowPane (movie grid, cast, showtimes) in `MoviesView`, `MovieDetailView` |
-| 5 | Layouts | HBox, VBox, GridPane (`SeatDialog`, `AdminView`), BorderPane (`DashboardView`), StackPane (`Theme.poster`, page area) |
-| 5 | Controls | Label, TextField, Button, TextArea, CheckBox, ComboBox, PasswordField, DatePicker, ToggleButton |
-| 5 | TableView / ListView | `MyBookingsView` and `AdminView` (TableView); recent activity in `MyBookingsView` (ListView) |
-| 5 | Events and listeners | `setOnAction` on buttons; `addListener` on search box, combo boxes, checkbox, table selection, seats |
-| 5 | Validation, alerts, dialogs | `util/Validator`, `ui/Dialogs` (Alert), status bar notifications |
+- JDK 17 or later
+- Apache Maven
+- IntelliJ IDEA or another Java-compatible IDE
 
-## Look and features
-Clean look: off-white background, white rounded cards, black buttons, grey text, yellow rating star (`resources/style.css`, `ui/Theme`). Headings use the bundled Bebas Neue font (open source, see `resources/fonts/OFL.txt`).
-Header: logo, search (filters the movie grid while you type), location (state > city, India) and a profile menu (bookings, admin panel, change location, logout).
-Home: genre pills, sort/filter menu, grid of movie cards (poster, rating badge, name, genre, duration, year, Book Tickets).
-Movie page: story, director, cast, trailer button (opens a YouTube search in the browser) and show times grouped by day.
-Posters: copy images into the `posters/` folder using the file names listed in `posters/_READ_ME_FIRST.txt`.
-Location: asked after the first login (state, then city), saved on the account, shown in the header, the page heading and the show times.
+### Running the Application
 
-## Notes for viva
-- JDK = compiler + tools + JRE. JRE = JVM + libraries. JVM runs bytecode (`.class`). Java is compiled to bytecode once, runs anywhere a JVM exists.
-- CLASSPATH = where the JVM looks for `.class` files / jars. Maven builds it from pom dependencies. Manual run: `java -cp target/classes:sqlite-jdbc.jar com.mbs.Launcher`.
-- Double booking is prevented twice: seat check inside the transaction, and the `PRIMARY KEY (show_id, seat)` in `booked_seats`. On any error the transaction rolls back, so no half-saved bookings.
-- Loyalty rule: after 5 confirmed bookings a customer gets 10% off (values in app.properties). Price = tickets - discount + 18% GST.
-- Mini-project mapping: close to the "Hospital/Clinic Appointment Scheduler" suggestion (booking and cancellation system) with database integration.
+**Using IntelliJ IDEA**
+
+1. Open IntelliJ IDEA.
+2. Select **File → Open** and choose the project folder containing `pom.xml`.
+3. Wait for Maven dependencies to finish importing.
+4. Run `com.mbs.Launcher`.
+
+**Using the Terminal**
+
+Navigate to the project directory and execute:
+
+```bash
+mvn javafx:run
+```
+
+To build the project:
+
+```bash
+mvn clean package
+```
+
+## Administrator Configuration
+
+The administrator logs in using the following email:
+
+```text
+admin@theatrely.com
+```
+
+The administrator password must be configured through the `THEATRELY_ADMIN_PASSWORD` environment variable before launching the application.
+
+**Windows CMD:**
+
+```cmd
+set THEATRELY_ADMIN_PASSWORD=your_secure_password
+mvn javafx:run
+```
+
+Replace `your_secure_password` with your chosen password. Run both commands in the same terminal session. The password is not stored in the tracked application properties file.
+
+## Database and Configuration
+
+- The application uses SQLite for persistent data storage.
+- The database is created automatically at `data/movies.db`.
+- The initial database includes 20 sample movies and their associated shows.
+- Fresh shows are generated on application startup when existing show dates have passed.
+- Application logs are written to `logs/app.log`.
+- General application settings are maintained in `src/main/resources/app.properties`.
+
+## Application Features
+
+### Customer Features
+
+- Customer registration and login.
+- Password storage using salted SHA-256 hashes.
+- Movie browsing with posters, ratings, genres, release years, and durations.
+- Movie search and genre-based filtering.
+- Movie sorting and filtering.
+- Movie details, including synopsis, director, cast, and trailer links.
+- Showtime selection and interactive seat booking.
+- Booking history and cancellation.
+- Digital booking receipts and CSV export.
+- Booking backup and restoration.
+- Customer location management using state and city selection.
+- About Theatrely dialog displaying the TMDB logo and required API attribution.
+
+### Administrator Features
+
+- Dedicated administrator login.
+- Movie and show management.
+- Booking and customer management.
+- Administrative data views and booking records.
+- Movie poster upload and management.
+
+### Booking and Pricing Logic
+
+- Seat availability is checked before booking.
+- Database transactions ensure that incomplete bookings are rolled back.
+- A composite primary key on `(show_id, seat)` prevents duplicate seat bookings.
+- Customers receive a 10% loyalty discount after five confirmed bookings.
+- GST is calculated at 18%.
+- Maximum seats per booking, loyalty thresholds, discount percentages, and GST rates are configurable through `app.properties`.
+
+## Project Architecture
+
+The application follows a layered architecture to separate user interface components, business logic, database operations, and utility functionality.
+
+| Layer | Responsibility |
+|---|---|
+| Model | Represents entities such as movies, shows, bookings, customers, and administrators. |
+| DAO | Handles database operations using JDBC. |
+| Service | Implements business logic, authentication, booking operations, and validation. |
+| UI | Implements JavaFX screens and user interactions. |
+| Util | Provides configuration, database connectivity, logging, password handling, and file operations. |
+| Exception | Contains custom application exceptions. |
+
+### Project Structure
+
+```text
+src/
+└── main/
+    ├── java/
+    │   └── com/mbs/
+    │       ├── model/
+    │       ├── dao/
+    │       ├── service/
+    │       ├── util/
+    │       ├── ui/
+    │       └── exception/
+    └resources/
+     ├── app.properties
+     ├── style.css
+     ├── fonts/
+     └── images/
+         └── tmdb-logo.svg
+```
+
+## Syllabus Coverage
+
+The project incorporates Java programming, object-oriented programming, exception handling, collections, file handling, database connectivity, and JavaFX concepts covered in the course.
+
+### Unit 1 – Java Fundamentals and Object-Oriented Programming
+
+| Topic | Implementation |
+|---|---|
+| Packages and Project Structure | Organized packages: `model`, `dao`, `service`, `util`, `ui`, and `exception`. |
+| Classes and Objects | Application entities such as `Movie`, `Show`, `Booking`, and `Customer`. |
+| Interfaces | `Payable` interface implemented by `Show`; generic `GenericDao<T>` interface implemented by DAO classes. |
+| Abstract Classes and Inheritance | Abstract `Person` class extended by `Customer` and `Admin`. |
+| Static and Instance Members | Static members in `Person` and shared application services in `Session`. |
+| Access Modifiers | Encapsulation using private and protected members. |
+| Coding Conventions | camelCase methods, PascalCase classes, Javadoc comments, and organized packages. |
+| Build Tools | Maven dependency and build management through `pom.xml`. |
+| JVM, JRE, JDK, and CLASSPATH | Java compilation, bytecode execution, runtime environment, and dependency management. |
+
+### Unit 2 – Exception Handling, Collections, and Java Utilities
+
+| Topic | Implementation |
+|---|---|
+| Exception Handling | `try`, `catch`, `throws`, and custom exceptions. |
+| Custom Exceptions | `BookingException`, `SeatUnavailableException`, and `InvalidInputException`. |
+| ArrayList | Managing seat lists and DAO query results. |
+| HashMap | Genre-based movie counts in `CatalogService`. |
+| LinkedList | Maintaining recent booking activity in `BookingService`. |
+| HashSet | Managing unique booked seats and movie genres. |
+| Iterator | Traversal and removal in catalogue and booking operations. |
+| Comparator and Comparable | `Comparator` for movie sorting and `Comparable` implemented by `Movie`. |
+| Generics | `GenericDao<T>` and generic collection-processing methods in `CatalogService`. |
+| Objects, Optional, and Math | `Objects` utility methods, `Optional` for database lookups, and `Math.round()` for price calculations. |
+| Date and Time API | `LocalDate`, `LocalTime`, and `LocalDateTime` for show schedules and booking timestamps. |
+
+### Unit 3 – File Handling, Serialization, and Logging
+
+| Topic | Implementation |
+|---|---|
+| Character Streams | `BufferedReader`, `BufferedWriter`, `FileWriter`, and related utilities for receipts, CSV exports, and log reading. |
+| Byte Streams | `FileInputStream` and `FileOutputStream` for copying movie posters. |
+| Serialization | Object serialization through `FileUtil.backup()`. |
+| Deserialization | Restoring serialized booking data through `FileUtil.restore()`. |
+| Logging | Centralized application logging using `java.util.logging` through `AppLogger`. |
+| Properties File | Application configuration loaded from `app.properties` using `AppConfig`. |
+
+### Unit 4 – JDBC and Database Management
+
+| Topic | Implementation |
+|---|---|
+| JDBC API | Database connectivity using `Connection`, `DriverManager`, `PreparedStatement`, and `ResultSet`. |
+| Database Integration | SQLite integration using the SQLite JDBC driver. |
+| CRUD Operations | Insert, retrieve, update, and delete operations implemented through DAO classes. |
+| Prepared Statements | Parameterized SQL queries for database operations. |
+| Transactions | Booking and cancellation operations using `setAutoCommit(false)`, `commit()`, and `rollback()`. |
+| DAO Pattern | Separation of database access logic through DAO classes and `GenericDao<T>`. |
+| Data Integrity | Primary key and database constraints to prevent duplicate seat bookings. |
+
+### Unit 5 – JavaFX Application Development
+
+| Topic | Implementation |
+|---|---|
+| JavaFX Application Lifecycle | Application initialization and lifecycle management through `Main`. |
+| Stage and Scene | Application windows and scene management using JavaFX `Stage` and `Scene`. |
+| Scene Graph | JavaFX nodes and containers used to organize application screens. |
+| Layouts | `HBox`, `VBox`, `GridPane`, `BorderPane`, `StackPane`, and `FlowPane`. |
+| JavaFX Controls | `Label`, `TextField`, `PasswordField`, `Button`, `TextArea`, `CheckBox`, `ComboBox`, `DatePicker`, and `ToggleButton`. |
+| TableView | Administrative and booking information displayed in tabular form. |
+| ListView | Recent activity displayed in `MyBookingsView`. |
+| Event Handling | Button actions, property listeners, search input changes, and table selection events. |
+| Validation and Alerts | Input validation, alerts, confirmation dialogs, and application notifications. |
+
+## Additional Application Concepts
+
+- **Layered Architecture:** Separates presentation, business logic, data access, and utility functionality.
+- **Authentication:** Implements customer password hashing with salts and environment-based administrator password configuration.
+- **Data Integrity:** Uses database constraints and transactions to prevent duplicate seat bookings and incomplete operations.
+- **Configuration Management:** Keeps application settings separate from application logic.
+- **Input Validation:** Validates user inputs before processing registration, login, booking, and administrative operations.
+
+## User Interface
+
+The application uses an off-white background, white rounded cards, black buttons, grey text, and yellow rating indicators. Styling is maintained through `resources/style.css` and the JavaFX `Theme` utility.
+
+- **Header:** Application logo, movie search, location selector, and profile menu.
+- **Home:** Genre filters, sorting options, and movie cards displaying posters, ratings, names, genres, durations, and release years.
+- **Movie Details:** Movie synopsis, director, cast, trailer link, and available showtimes grouped by day.
+- **Seat Selection:** Interactive seat selection for booking.
+- **My Bookings:** Booking history, cancellation, receipts, and backup options.
+- **Admin Panel:** Administrative views and management controls.
+
+## Movie Posters
+
+Movie posters are stored in the `posters/` directory.
+
+To display posters correctly, place the corresponding image files in this directory using the filenames specified in:
+
+```text
+posters/_READ_ME_FIRST.txt
+```
+
+The application supports poster selection and copying through the administrator interface.
+
+## Configuration Reference
+
+The main application settings are maintained in:
+
+```text
+src/main/resources/app.properties
+```
+
+These include:
+
+| Property | Purpose |
+|---|---|
+| `app.title` | Application title |
+| `db.url` | SQLite database connection URL |
+| `log.file` | Application log file location |
+| `admin.email` | Administrator login email |
+| `max.seats.per.booking` | Maximum seats allowed per booking |
+| `gst.percent` | GST percentage |
+| `loyal.after.bookings` | Confirmed bookings required for loyalty benefits |
+| `loyal.discount.percent` | Loyalty discount percentage |
+| `poster.dir` | Movie poster directory |
+
+The administrator password is configured separately through the `THEATRELY_ADMIN_PASSWORD` environment variable.

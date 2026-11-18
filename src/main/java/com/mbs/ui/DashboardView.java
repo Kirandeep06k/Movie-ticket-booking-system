@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebView;
 
 /** App shell: header (logo, search, location, profile menu), page area (StackPane), status line. */
 public class DashboardView {
@@ -112,6 +113,53 @@ public class DashboardView {
         who.setDisable(true);
         MenuItem bookings = new MenuItem(Session.isAdmin() ? "All bookings" : "My bookings");
         bookings.setOnAction(e -> showPage(new MyBookingsView().build()));
+        MenuItem about = new MenuItem("About Theatrely");
+        about.setOnAction(e -> {
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                    javafx.scene.control.Alert.AlertType.INFORMATION
+            );
+
+            alert.setTitle("About Theatrely");
+            alert.setHeaderText("Theatrely - Movie Booking");
+
+            WebView logoView = new WebView();
+            logoView.setPrefSize(300, 100);
+            logoView.setMaxSize(300, 100);
+
+            java.net.URL logoResource =
+        DashboardView.class.getResource("/images/tmdb-logo.svg");
+
+            if (logoResource != null) {
+                String html = """
+                        <html>
+                        <body style="margin:0; padding:10px; background:transparent;
+                                    text-align:center;">
+                            <img src="%s" style="width:250px; height:75px;">
+                        </body>
+                        </html>
+                        """.formatted(logoResource.toExternalForm());
+
+                logoView.getEngine().loadContent(html);
+            } else {
+                System.err.println("TMDB logo resource not found!");
+            }
+
+            javafx.scene.control.Label attribution = new javafx.scene.control.Label(
+                    "Movie information and posters are provided using TMDB.\n\n"
+                    + "This product uses the TMDB API but is not endorsed or certified by TMDB."
+            );
+            attribution.setWrapText(true);
+            attribution.setMaxWidth(380);
+
+            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(
+                    12, logoView, attribution
+            );
+            content.setAlignment(javafx.geometry.Pos.CENTER);
+            content.setPadding(new javafx.geometry.Insets(10));
+
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        });
         MenuItem changeLoc = new MenuItem("Change location");
         changeLoc.setOnAction(e -> {
             if (LocationDialog.open(false)) {
@@ -130,7 +178,13 @@ public class DashboardView {
             admin.setOnAction(e -> showPage(new AdminView().build()));
             profile.getItems().add(admin);
         }
-        profile.getItems().addAll(changeLoc, new SeparatorMenuItem(), logout);
+        profile.getItems().addAll(
+                new SeparatorMenuItem(),
+                about,
+                changeLoc,
+                new SeparatorMenuItem(),
+                logout
+        );
 
         Region left = new Region();
         Region right = new Region();
