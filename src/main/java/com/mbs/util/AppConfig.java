@@ -1,3 +1,4 @@
+
 package com.mbs.util;
 
 import java.io.IOException;
@@ -20,7 +21,13 @@ public final class AppConfig {
 
     private AppConfig() { }
 
-    public static String get(String key, String def) { return PROPS.getProperty(key, def); }
+    public static String get(String key, String def) {
+        if ("admin.password".equals(key)) {
+            String password = System.getenv("THEATRELY_ADMIN_PASSWORD");
+            return password == null ? def : password;
+        }
+        return PROPS.getProperty(key, def);
+    }
 
     public static int getInt(String key, int def) {
         try {
